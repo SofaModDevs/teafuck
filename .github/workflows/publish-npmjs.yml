@@ -17,7 +17,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          registry-url: https://registry.npmjs.org/
-      - run: npm publish --access public --registry=https://registry.npmjs.org
+          registry-url: https://registry.npmjs.org
+      - run: |
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          cat .npmrc
+          npm publish --access public --registry=https://registry.npmjs.org
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
